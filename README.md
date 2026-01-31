@@ -6,71 +6,61 @@ Mentis is a Retrieval-Augmented Generation (RAG) powered mental health assistant
 
 ```mermaid
 flowchart TD
-    %% Nodes
-    UI[User Interface]
-    API_Call[Fetch API]
-    Server[Server.py]
-
-    Agent[CBT Agent]
-    Router{Router}
-    Therapist_Mode[Therapist Mode]
-    Casual_Mode[Casual Mode]
-
-    VectorDB[(ChromaDB)]
-    PDFs[PDF Documents]
-    Ingestion[Ingestion Script]
-
-    Groq[Groq API (Llama 3.1)]
+    %% ===== User =====
     User((User))
 
-    %% Subgraphs (visual only)
-    subgraph Frontend["Frontend (React + Vite)"]
-        UI
-        API_Call
+    %% ===== Frontend =====
+    subgraph Frontend["Frontend • React + Vite"]
+        UI[User Interface]
+        API_Call[Fetch API]
+        UI --> API_Call
     end
 
-    subgraph Backend["Backend (FastAPI)"]
-        Server
+    %% ===== Backend =====
+    subgraph Backend["Backend • FastAPI"]
+        Server[server.py]
     end
 
-    subgraph AI_Core["AI Core (LangGraph)"]
-        Agent
-        Router
-        Therapist_Mode
-        Casual_Mode
+    %% ===== AI Core =====
+    subgraph AI_Core["AI Core • LangGraph"]
+        Agent[CBT Agent]
+        Router{Router}
+        Therapist[Therapist Mode]
+        Casual[Casual Mode]
+
+        Agent --> Router
+        Router --> Therapist
+        Router --> Casual
     end
 
+    %% ===== Knowledge Base =====
     subgraph Data["Knowledge Base"]
-        VectorDB
-        PDFs
-        Ingestion
+        PDFs[PDF Documents]
+        Ingest[Ingestion Script]
+        VectorDB[(ChromaDB)]
+
+        PDFs --> Ingest --> VectorDB
     end
 
-    subgraph External_API["External Services"]
-        Groq
+    %% ===== External LLM =====
+    subgraph External["External Service"]
+        Groq[Groq API - Llama 3.1]
     end
 
-    %% Flows
+    %% ===== Main Flow =====
     User --> UI
-    UI --> API_Call
     API_Call --> Server
     Server --> Agent
 
-    Agent --> Router
-    Router --> Therapist_Mode
-    Router --> Casual_Mode
-
-    Therapist_Mode --> VectorDB
-    VectorDB --> Therapist_Mode
-    Therapist_Mode --> Groq
-    Casual_Mode --> Groq
+    Therapist --> VectorDB
+    VectorDB --> Therapist
+    Therapist --> Groq
+    Casual --> Groq
 
     Groq --> Agent
     Agent --> Server
     Server --> UI
 
-    PDFs --> Ingestion
-    Ingestion --> VectorDB
 ```
 
 ## 🚀 Features

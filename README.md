@@ -5,7 +5,7 @@ Mentis is a Retrieval-Augmented Generation (RAG) powered mental health assistant
 ## 🧠 System Architecture
 
 ```mermaid
-graph TD
+flowchart TD
     subgraph Frontend ["🖥️ Frontend (React + Vite)"]
         UI[User Interface]
         API_Call[Fetch API]

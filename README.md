@@ -6,33 +6,52 @@ Mentis is a Retrieval-Augmented Generation (RAG) powered mental health assistant
 
 ```mermaid
 flowchart TD
+    %% Nodes
+    UI[User Interface]
+    API_Call[Fetch API]
+    Server[Server.py]
+
+    Agent[CBT Agent]
+    Router{Router}
+    Therapist_Mode[Therapist Mode]
+    Casual_Mode[Casual Mode]
+
+    VectorDB[(ChromaDB)]
+    PDFs[PDF Documents]
+    Ingestion[Ingestion Script]
+
+    Groq[Groq API (Llama 3.1)]
+    User((User))
+
+    %% Subgraphs (visual only)
     subgraph Frontend["Frontend (React + Vite)"]
-        UI[User Interface]
-        API_Call[Fetch API]
+        UI
+        API_Call
     end
 
     subgraph Backend["Backend (FastAPI)"]
-        Server[Server.py]
+        Server
     end
 
     subgraph AI_Core["AI Core (LangGraph)"]
-        Agent[CBT Agent]
-        Router{Router}
-        Therapist_Mode[Therapist Mode]
-        Casual_Mode[Casual Mode]
+        Agent
+        Router
+        Therapist_Mode
+        Casual_Mode
     end
 
     subgraph Data["Knowledge Base"]
-        VectorDB[(ChromaDB)]
-        PDFs[PDF Documents]
-        Ingestion[Ingestion Script]
+        VectorDB
+        PDFs
+        Ingestion
     end
 
     subgraph External_API["External Services"]
-        Groq[Groq API (Llama 3.1)]
+        Groq
     end
 
-    User((User)) --> UI
+    %% Flows
+    User --> UI
     UI --> API_Call
     API_Call --> Server
     Server --> Agent

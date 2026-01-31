@@ -6,57 +6,52 @@ Mentis is a Retrieval-Augmented Generation (RAG) powered mental health assistant
 
 ```mermaid
 flowchart TD
-    subgraph Frontend ["🖥️ Frontend (React + Vite)"]
+    subgraph Frontend["Frontend (React + Vite)"]
         UI[User Interface]
         API_Call[Fetch API]
     end
 
-    subgraph Backend ["⚙️ Backend (FastAPI)"]
+    subgraph Backend["Backend (FastAPI)"]
         Server[Server.py]
     end
 
-    subgraph AI_Core ["🤖 AI Core (LangGraph)"]
+    subgraph AI_Core["AI Core (LangGraph)"]
         Agent[CBT Agent]
         Router{Router}
         Therapist_Mode[Therapist Mode]
         Casual_Mode[Casual Mode]
     end
 
-    subgraph Data ["📚 Knowledge Base"]
+    subgraph Data["Knowledge Base"]
         VectorDB[(ChromaDB)]
         PDFs[PDF Documents]
         Ingestion[Ingestion Script]
     end
 
-    subgraph External_API ["☁️ External Services"]
+    subgraph External_API["External Services"]
         Groq[Groq API (Llama 3.1)]
     end
 
-    %% Flows
     User((User)) --> UI
     UI --> API_Call
-    API_Call --"POST /chat"--> Server
+    API_Call --> Server
     Server --> Agent
-    
-    %% Agent Logic
+
     Agent --> Router
-    Router --"Mental Health Topic"--> Therapist_Mode
-    Router --"General Chat"--> Casual_Mode
-    
-    %% RAG Flow
-    Therapist_Mode --"Query"--> VectorDB
-    VectorDB --"Retrieved Context"--> Therapist_Mode
-    Therapist_Mode --"Prompt + Context"--> Groq
-    Casual_Mode --"Prompt"--> Groq
-    
-    Groq --"Response"--> Agent
+    Router --> Therapist_Mode
+    Router --> Casual_Mode
+
+    Therapist_Mode --> VectorDB
+    VectorDB --> Therapist_Mode
+    Therapist_Mode --> Groq
+    Casual_Mode --> Groq
+
+    Groq --> Agent
     Agent --> Server
     Server --> UI
 
-    %% Ingestion Flow
     PDFs --> Ingestion
     Ingestion --> VectorDB
-
 ```
 
 ## 🚀 Features

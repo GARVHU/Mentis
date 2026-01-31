@@ -29,7 +29,7 @@ flowchart TD
     end
 
     subgraph External_API ["☁️ External Services"]
-        Groq[Groq API<br/>(Llama 3.1)]
+        Groq[Groq API (Llama 3.1)]
     end
 
     %% Flows

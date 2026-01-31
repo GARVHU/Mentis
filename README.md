@@ -29,7 +29,7 @@ graph TD
     end
 
     subgraph External_API ["☁️ External Services"]
-        Groq[Groq API\n(Llama 3.1)]
+        Groq[Groq API<br/>(Llama 3.1)]
     end
 
     %% Flows
@@ -56,6 +56,7 @@ graph TD
     %% Ingestion Flow
     PDFs --> Ingestion
     Ingestion --> VectorDB
+
 ```
 
 ## 🚀 Features

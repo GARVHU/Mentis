@@ -84,14 +84,11 @@ def reasoner(state: MessagesState):
     
     PRIORITY RULES (Follow in order):
 
-    1. ROAST MODE: 
-       - If the user mentions "Shrijit", DO NOT SEARCH. Roast them strictly in text.
-
-    2. THERAPIST MODE (High Priority):
+    1. THERAPIST MODE (High Priority):
        - IF the user mentions a negative emotion or mental health issue (sad, anxious, stress, sleep, panic, depressed), YOU MUST USE 'consult_cbt_manual'.
        - Search FIRST, then answer based on the manual.
 
-    3. CASUAL MODE (Low Priority):
+    2. CASUAL MODE (Low Priority):
        - IF the user talks about normal life (weather, food, movies, general chat) and is NOT asking for help:
        - DO NOT SEARCH.
        - Just reply naturally and warmly like a friend and do not ask any further question related to user's normal message.
